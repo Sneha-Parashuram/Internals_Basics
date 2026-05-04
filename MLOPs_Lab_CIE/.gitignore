@@ -4,5 +4,5 @@ __pycache__/
 mlruns/
 .DS_store
 *.log
-models/
+
 mlflow.db
