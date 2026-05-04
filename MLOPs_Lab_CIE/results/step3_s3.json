@@ -1,0 +1,12 @@
+{
+  "image_name": "biomotion-predictor",
+  "image_tag": "v1",
+  "base_image": "python:3.10-slim",
+  "test_input": {
+    "stride_length_cm": 123.1,
+    "ground_contact_ms": 272.1,
+    "hip_drop_degrees": 7.4,
+    "fatigue_index": 5.6
+  },
+  "prediction": 45.266
+}
