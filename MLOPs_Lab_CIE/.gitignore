@@ -5,3 +5,4 @@ mlruns/
 .DS_store
 *.log
 models/
+mlflow.db
