@@ -7,7 +7,7 @@
         "min_samples_split": 2,
         "n_estimators": 150
     },
-    "best_mae": 2.156,
+    "best_rmse": 2.156,
     "best_cv_rmse": 7.373,
     "parent_run_name": "tuning-biomotion"
 }
