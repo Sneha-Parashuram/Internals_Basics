@@ -1,0 +1,16 @@
+{
+  "health_endpoint": "/ping",
+  "predict_endpoint": "/infer",
+  "port": 9000,
+  "health_response": {
+    "status": "healthy",
+    "model_loaded": true
+  },
+  "test_input": {
+    "stride_length_cm": 123.1,
+    "ground_contact_ms": 272.1,
+    "hip_drop_degrees": 7.4,
+    "fatigue_index": 5.6
+  },
+  "prediction": 45.266
+}

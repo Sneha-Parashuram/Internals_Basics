@@ -4,6 +4,7 @@ import mlflow
 import mlflow.sklearn
 import pandas as pd
 import numpy as np
+import joblib
 
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_absolute_error, mean_squared_error
@@ -39,17 +40,17 @@ def main():
 
         preds = svr.predict(X_test)
 
-        mae = mean_absolute_error(y_test, preds)
-        rmse = np.sqrt(mean_squared_error(y_test, preds))
+        svr_mae = mean_absolute_error(y_test, preds)
+        svr_rmse = np.sqrt(mean_squared_error(y_test, preds))
 
         mlflow.log_param("model", "SVR")
-        mlflow.log_metric("mae", mae)
-        mlflow.log_metric("rmse", rmse)
+        mlflow.log_metric("mae", svr_mae)
+        mlflow.log_metric("rmse", svr_rmse)
 
         results.append({
             "name": "SVR",
-            "mae": round(mae, 3),
-            "rmse": round(rmse, 3)
+            "mae": round(svr_mae, 3),
+            "rmse": round(svr_rmse, 3)
         })
 
     # ---------------- Random Forest ----------------
@@ -61,28 +62,38 @@ def main():
 
         preds = rf.predict(X_test)
 
-        mae = mean_absolute_error(y_test, preds)
-        rmse = np.sqrt(mean_squared_error(y_test, preds))
+        rf_mae = mean_absolute_error(y_test, preds)
+        rf_rmse = np.sqrt(mean_squared_error(y_test, preds))
 
         mlflow.log_param("model", "RandomForest")
-        mlflow.log_metric("mae", mae)
-        mlflow.log_metric("rmse", rmse)
+        mlflow.log_metric("mae", rf_mae)
+        mlflow.log_metric("rmse", rf_rmse)
 
         results.append({
             "name": "RandomForest",
-            "mae": round(mae, 3),
-            "rmse": round(rmse, 3)
+            "mae": round(rf_mae, 3),
+            "rmse": round(rf_rmse, 3)
         })
 
     # ---------------- Select Best ----------------
-    best_model = min(results, key=lambda x: x["rmse"])
+    best_model_info = min(results, key=lambda x: x["rmse"])
 
+    if best_model_info["name"] == "SVR":
+        best_model = svr
+    else:
+        best_model = rf
+
+    # ✅ SAVE MODEL (IMPORTANT)
+    os.makedirs("models", exist_ok=True)
+    joblib.dump(best_model, "models/model.pkl")
+
+    # ---------------- Save JSON ----------------
     output = {
         "experiment_name": EXPERIMENT_NAME,
         "models": results,
-        "best_model": best_model["name"],
+        "best_model": best_model_info["name"],
         "best_metric_name": "rmse",
-        "best_metric_value": best_model["rmse"]
+        "best_metric_value": best_model_info["rmse"]
     }
 
     os.makedirs("results", exist_ok=True)
@@ -90,7 +101,7 @@ def main():
     with open("results/step1_s1.json", "w") as f:
         json.dump(output, f, indent=4)
 
-    print("✅ Task 1 completed")
+    print("Task 1 completed")
 
 if __name__ == "__main__":
     main()
