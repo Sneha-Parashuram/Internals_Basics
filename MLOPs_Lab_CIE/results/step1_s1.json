@@ -1,22 +1,18 @@
 {
-    "experiment_name": "gpuforge-job-completion",
+    "experiment_name": "biomotion-injury-risk-score",
     "models": [
         {
-            "name": "Ridge",
-            "mae": 3.7291898741871123,
-            "rmse": 5.216021791335413,
-            "r2": 0.6391397000544511,
-            "mape": 7.166886954432602
+            "name": "SVR",
+            "mae": 10.137,
+            "rmse": 10.612
         },
         {
-            "name": "GradientBoosting",
-            "mae": 7.052454215403294,
-            "rmse": 9.149452817090912,
-            "r2": -0.1103261167706977,
-            "mape": 13.04929246023922
+            "name": "RandomForest",
+            "mae": 7.601,
+            "rmse": 8.781
         }
     ],
-    "best_model": "Ridge",
+    "best_model": "RandomForest",
     "best_metric_name": "rmse",
-    "best_metric_value": 5.216021791335413
+    "best_metric_value": 8.781
 }
